@@ -292,3 +292,30 @@ probe dp_req_done = process("@libexecdir@/sssd/sssd_be").mark("dp_req_done")
     dp_ret = $arg4;
     dp_errorstr = user_string($arg5, "NULL");
 }
+
+probe sbus_req_call_send = process("@libdir@/sssd/libsss_sbus.so").mark("sbus_req_call_send") {
+    sbus_method = user_string($arg1, "NULL");
+}
+
+probe sbus_req_call_done = process("@libdir@/sssd/libsss_sbus.so").mark("sbus_req_call_done") {
+    sbus_send = user_string($arg1, "NULL");
+}
+
+probe nss_getby_name_send = process("@libexecdir@/sssd/sssd_nss").mark("nss_getby_name_send")
+{
+    nss_getby_rawname = user_string($arg1, "NULL");
+}
+
+probe nss_getby_done = process("@libexecdir@/sssd/sssd_nss").mark("nss_getby_done")
+{
+    nss_getby_rawname = user_string($arg1, "NULL");
+}
+
+probe sss_dp_send = process("@libexecdir@/sssd/sssd_nss").mark("sss_dp_send") {
+    opt_name = user_string($arg1, "NULL");
+    conn_name = user_string($arg2, "NULL");
+}
+
+probe sss_dp_done = process("@libexecdir@/sssd/sssd_nss").mark("sss_dp_done") {
+    error_message = user_string($arg1, "NULL");
+}

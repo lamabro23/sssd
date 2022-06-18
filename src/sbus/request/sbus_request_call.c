@@ -21,7 +21,10 @@
 #include <tevent.h>
 #include <talloc.h>
 
+#include "util/util.h"
 #include "sbus/sbus_private.h"
+#include "util/probes.h"
+#include <dbus/dbus.h>
 
 struct sbus_call_method_state {
     DBusMessage *reply;
@@ -74,6 +77,7 @@ sbus_call_method_send(TALLOC_CTX *mem_ctx,
         goto done;
     }
 
+    PROBE(SBUS_REQ_CALL_SEND, method);
     subreq = sbus_outgoing_request_send(state, conn->ev, conn, key, msg);
     if (subreq == NULL) {
         DEBUG(SSSDBG_CRIT_FAILURE, "Unable to create subrequest!\n");
@@ -110,6 +114,7 @@ static void sbus_call_method_done(struct tevent_req *subreq)
         return;
     }
 
+    PROBE(SBUS_REQ_CALL_DONE, dbus_message_get_sender(state->reply));
     tevent_req_done(req);
     return;
 }

@@ -23,6 +23,7 @@
 
 #include "util/util.h"
 #include "util/sss_ptr_hash.h"
+#include "util/probes.h"
 #include "db/sysdb.h"
 #include "responder/nss/nss_private.h"
 #include "responder/nss/nss_protocol.h"
@@ -118,6 +119,7 @@ static errno_t nss_getby_name(struct cli_ctx *cli_ctx,
         goto done;
     }
 
+    PROBE(NSS_GETBY_NAME_SEND, rawname)
     subreq = nss_get_object_send(cmd_ctx, cli_ctx->ev, cli_ctx,
                                  data, memcache, rawname, 0);
     if (subreq == NULL) {
@@ -613,6 +615,7 @@ static void nss_getby_done(struct tevent_req *subreq)
         goto done;
     }
 
+    PROBE(NSS_GETBY_DONE, cmd_ctx->rawname)
     if ((cmd_ctx->flags & SSS_NSS_EX_FLAG_INVALIDATE_CACHE) != 0) {
         ret = invalidate_cache(cmd_ctx, result);
         if (ret != EOK) {
