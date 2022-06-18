@@ -23,6 +23,7 @@
 #include <sys/time.h>
 #include <time.h>
 #include "util/util.h"
+#include "util/probes.h"
 #include "responder/common/responder_packet.h"
 #include "responder/common/responder.h"
 #include "providers/data_provider.h"
@@ -273,6 +274,7 @@ sss_dp_get_account_send(TALLOC_CTX *mem_ctx,
           dom->name, entry_type, be_req2str(entry_type),
           filter, extra == NULL ? "-" : extra);
 
+    PROBE(SSS_DP_SEND, opt_name, dom->conn_name)
     subreq = sbus_call_dp_dp_getAccountInfo_send(state, be_conn->conn,
                  be_conn->bus_name, SSS_BUS_PATH, dp_flags,
                  entry_type, filter, dom->name, extra,
@@ -311,6 +313,8 @@ static void sss_dp_get_account_done(struct tevent_req *subreq)
     ret = sbus_call_dp_dp_getAccountInfo_recv(state, subreq, &state->dp_error,
                                               &state->error,
                                               &state->error_message);
+
+    PROBE(SSS_DP_DONE, state->error_message)
     talloc_zfree(subreq);
     if (ret != EOK) {
         tevent_req_error(req, ret);

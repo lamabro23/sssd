@@ -1109,6 +1109,9 @@ libsss_sbus_la_LIBADD = \
     $(DBUS_LIBS) \
     $(UNICODE_LIBS) \
     $(NULL)
+if BUILD_SYSTEMTAP
+libsss_sbus_la_LIBADD += stap_generated_probes.lo
+endif
 libsss_sbus_la_CFLAGS = \
     $(AM_CFLAGS) \
 	$(DHASH_CFLAGS) \
@@ -1530,6 +1533,9 @@ sssd_nss_LDADD = \
     libsss_iface.la \
     libsss_sbus.la \
     $(NULL)
+if BUILD_SYSTEMTAP
+sssd_nss_LDADD += stap_generated_probes.lo
+endif
 if BUILD_SUBID
     sssd_nss_SOURCES += src/responder/nss/nss_protocol_subid.c
 endif
@@ -1561,6 +1567,9 @@ sssd_pam_LDADD = \
     libsss_iface.la \
     libsss_sbus.la \
     $(NULL)
+if BUILD_SYSTEMTAP
+sssd_pam_LDADD += stap_generated_probes.lo
+endif
 
 if BUILD_SUDO
 sssd_sudo_SOURCES = \
@@ -1578,6 +1587,9 @@ sssd_sudo_LDADD = \
     libsss_iface.la \
     libsss_sbus.la \
     $(NULL)
+if BUILD_SYSTEMTAP
+sssd_sudo_LDADD += stap_generated_probes.lo
+endif
 endif
 
 if BUILD_AUTOFS
@@ -1593,6 +1605,9 @@ sssd_autofs_LDADD = \
     libsss_iface.la \
     libsss_sbus.la \
     $(NULL)
+if BUILD_SYSTEMTAP
+sssd_autofs_LDADD += stap_generated_probes.lo
+endif
 endif
 
 if BUILD_SSH
@@ -1615,6 +1630,9 @@ sssd_ssh_LDADD = \
     libsss_iface.la \
     libsss_sbus.la \
     $(NULL)
+if BUILD_SYSTEMTAP
+sssd_ssh_LDADD += stap_generated_probes.lo
+endif
 endif
 
 sssd_pac_SOURCES = \
@@ -1637,6 +1655,9 @@ sssd_pac_LDADD = \
     libsss_iface.la \
     libsss_sbus.la \
     $(NULL)
+if BUILD_SYSTEMTAP
+sssd_pac_LDADD += stap_generated_probes.lo
+endif
 
 if BUILD_IFP
 pkglib_LTLIBRARIES += libifp_iface.la
@@ -1716,6 +1737,9 @@ sssd_ifp_LDADD = \
     libsss_iface.la \
     libsss_sbus.la \
     $(NULL)
+if BUILD_SYSTEMTAP
+sssd_ifp_LDADD += stap_generated_probes.lo
+endif
 
 dist_dbuspolicy_DATA = \
     src/responder/ifp/org.freedesktop.sssd.infopipe.conf
@@ -1779,6 +1803,9 @@ sssd_kcm_LDADD = \
     libsss_iface.la \
     libsss_sbus.la \
     $(NULL)
+if BUILD_SYSTEMTAP
+sssd_kcm_LDADD += stap_generated_probes.lo
+endif
 
 if BUILD_KCM_RENEWAL
 sssd_kcm_SOURCES += \

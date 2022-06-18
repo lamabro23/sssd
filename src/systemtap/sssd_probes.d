@@ -74,4 +74,14 @@ provider sssd {
                       int target, int method);
     probe dp_req_done(const char *dp_req_name, int target, int method,
                       int ret, const char *errorstr);
+
+    probe sbus_req_call_send(const char *method, const char *bus);
+
+    probe sbus_req_call_done(const char *sender);
+
+    probe nss_getby_name_send(const char *rawname);
+    probe nss_getby_done(const char *rawname);
+
+    probe sss_dp_send(const char *opt_name, const char *conn_name);
+    probe sss_dp_done(const char *error_message);
 }
