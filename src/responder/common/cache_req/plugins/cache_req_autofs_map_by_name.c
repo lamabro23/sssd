@@ -68,13 +68,9 @@ cache_req_autofs_map_by_name_dp_send(TALLOC_CTX *mem_ctx,
                                      struct sss_domain_info *domain,
                                      struct ldb_result *result)
 {
-    errno_t ret;
-
-    ret = responder_check_domain_conn(cr->rctx, domain->conn_name);
-    if (ret != EOK) {
+    if (cr->rctx->sbus_conn == NULL) {
         DEBUG(SSSDBG_CRIT_FAILURE,
-              "BUG: The Data Provider connection %s for %s is not available!\n",
-              domain->conn_name, domain->name);
+            "BUG: The D-Bus connection is not available!\n");
         return NULL;
     }
 

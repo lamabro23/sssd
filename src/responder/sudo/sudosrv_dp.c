@@ -180,11 +180,9 @@ sss_dp_get_sudoers_send(TALLOC_CTX *mem_ctx,
         goto done;
     }
 
-    ret = responder_check_domain_conn(rctx, dom->conn_name);
-    if (ret != EOK) {
+    if (rctx->sbus_conn == NULL) {
         DEBUG(SSSDBG_CRIT_FAILURE,
-              "BUG: The Data Provider connection %s for %s is not available!\n",
-              dom->conn_name, dom->name);
+            "BUG: The D-Bus connection is not available!\n");
         ret = EIO;
         goto done;
     }

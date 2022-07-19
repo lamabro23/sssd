@@ -259,7 +259,7 @@ errno_t dp_init_recv(TALLOC_CTX *mem_ctx,
 
     TEVENT_REQ_RETURN_ON_ERROR(req);
 
-    *_conn = talloc_steal(mem_ctx, state->be_ctx->provider->sbus_conn);
+    *_conn = talloc_steal(mem_ctx, state->provider->sbus_conn);
 
     return EOK;
 }

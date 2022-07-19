@@ -583,11 +583,10 @@ ifp_domains_domain_is_online_send(TALLOC_CTX *mem_ctx,
         goto done;
     }
 
-    ret = responder_check_domain_conn(ifp_ctx->rctx, dom->conn_name);
-    if (ret != EOK) {
+    if (ifp_ctx->rctx->sbus_conn == NULL) {
         DEBUG(SSSDBG_CRIT_FAILURE,
-              "BUG: The Data Provider connection %s for %s is not available!\n",
-              dom->conn_name, dom->name);
+            "BUG: The D-Bus connection is not available!\n");
+        ret = ENOENT;
         goto done;
     }
 
@@ -678,11 +677,10 @@ ifp_domains_domain_list_services_send(TALLOC_CTX *mem_ctx,
         goto done;
     }
 
-    ret = responder_check_domain_conn(ifp_ctx->rctx, dom->conn_name);
-    if (ret != EOK) {
+    if (ifp_ctx->rctx->sbus_conn == NULL) {
         DEBUG(SSSDBG_CRIT_FAILURE,
-              "BUG: The Data Provider connection %s for %s is not available!\n",
-              dom->conn_name, dom->name);
+            "BUG: The D-Bus connection is not available!\n");
+        ret = ENOENT;
         goto done;
     }
 
@@ -774,11 +772,10 @@ ifp_domains_domain_active_server_send(TALLOC_CTX *mem_ctx,
         goto done;
     }
 
-    ret = responder_check_domain_conn(ifp_ctx->rctx, dom->conn_name);
-    if (ret != EOK) {
+    if (ifp_ctx->rctx->sbus_conn == NULL) {
         DEBUG(SSSDBG_CRIT_FAILURE,
-              "BUG: The Data Provider connection %s for %s is not available!\n",
-              dom->conn_name, dom->name);
+            "BUG: The D-Bus connection is not available!\n");
+        ret = ENOENT;
         goto done;
     }
 
@@ -870,11 +867,10 @@ ifp_domains_domain_list_servers_send(TALLOC_CTX *mem_ctx,
         goto done;
     }
 
-    ret = responder_check_domain_conn(ifp_ctx->rctx, dom->conn_name);
-    if (ret != EOK) {
+    if (ifp_ctx->rctx->sbus_conn == NULL) {
         DEBUG(SSSDBG_CRIT_FAILURE,
-              "BUG: The Data Provider connection %s for %s is not available!\n",
-              dom->conn_name, dom->name);
+            "BUG: The D-Bus connection is not available!\n");
+        ret = ENOENT;
         goto done;
     }
 
@@ -965,11 +961,10 @@ ifp_domains_domain_refresh_access_rules_send(TALLOC_CTX *mem_ctx,
         goto done;
     }
 
-    ret = responder_check_domain_conn(ifp_ctx->rctx, dom->conn_name);
-    if (ret != EOK) {
+    if (ifp_ctx->rctx->sbus_conn == NULL) {
         DEBUG(SSSDBG_CRIT_FAILURE,
-              "BUG: The Data Provider connection %s for %s is not available!\n",
-              dom->conn_name, dom->name);
+            "BUG: The D-Bus connection is not available!\n");
+        ret = ENOENT;
         goto done;
     }
 

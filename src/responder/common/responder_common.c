@@ -1374,22 +1374,6 @@ fail:
     return ret;
 }
 
-int responder_check_domain_conn(struct resp_ctx *rctx,
-                                const char *conn_name)
-{
-    struct sss_domain_info *iter;
-
-    if (!rctx->domains) return EIO;
-
-    for (iter = rctx->domains; iter; iter = iter->next) {
-        if (strcasecmp(conn_name, iter->conn_name) == 0) break;
-    }
-
-    if (!iter) return ENOENT;
-
-    return EOK;
-}
-
 struct sss_domain_info *
 responder_get_domain(struct resp_ctx *rctx, const char *name)
 {

@@ -35,13 +35,10 @@ errno_t
 pam_dp_send_req(struct pam_auth_req *preq)
 {
     struct tevent_req *subreq;
-    errno_t ret;
 
-    ret = responder_check_domain_conn(preq->cctx->rctx, preq->domain->conn_name);
-    if (ret != EOK) {
+    if (preq->cctx->rctx->sbus_conn == NULL) {
         DEBUG(SSSDBG_CRIT_FAILURE,
-              "BUG: The Data Provider connection %s for %s is not available!\n",
-              preq->domain->conn_name, preq->domain->name);
+            "BUG: The D-Bus connection is not available!\n");
         return EIO;
     }
 

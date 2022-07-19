@@ -338,7 +338,7 @@ proxy_cli_init(struct pc_ctx *ctx)
 {
     TALLOC_CTX *tmp_ctx;
     struct tevent_req *subreq;
-    char *sbus_address;
+    const char *sbus_address;
     char *sbus_busname;
     char *sbus_cliname;
     errno_t ret;
@@ -363,7 +363,7 @@ proxy_cli_init(struct pc_ctx *ctx)
         {NULL, NULL}
     };
 
-    sbus_address = talloc_asprintf(tmp_ctx, SSS_MASTER_ADDRESS);
+    sbus_address = SSS_MASTER_ADDRESS;
     if (sbus_address == NULL) {
         ret = ENOMEM;
         goto done;
